@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -17,8 +18,8 @@ public class StartMenuState implements IState {
 	private int menuSelector;
 	private Circle selectDot;
 	
-	public StartMenuState(Group root, Scene scene) {
-		this.root = root;
+	public StartMenuState(Group root2, Scene scene) {
+		this.root = root2;
 		this.scene = scene;
 		menuSelector = 0;
 	}
@@ -27,8 +28,8 @@ public class StartMenuState implements IState {
 	public void update(long currentNanoTime) {
 		scene.setOnMouseClicked(e -> {
 		        String msg =
-		          "\n這個物件: ("       + e.getX()      + ",  "       + e.getY()       + ") \n " +
-		          "scene: ("  + e.getSceneX() + ",  "  + e.getSceneY()  + ") \n " +
+		          "\n這個物件: ("       + e.getX()      + ",  "       + e.getY()       + ")\n " +
+		          "scene: ("  + e.getSceneX() + ",  "  + e.getSceneY()  + ")\n " +
 		          "screen: (" + e.getScreenX()+ ",  " + e.getScreenY() + ")";
 		        System.out.println(msg);
 		    });
@@ -101,7 +102,7 @@ public class StartMenuState implements IState {
     public void onExit() {
 	    	System.out.println("exit menu");
 	    	root.getChildren().clear();
-	    	//要把canvas加回去啦！！！
+	    	// Add Canvas back
 	    	root.getChildren().add(Game.canvas);
 	    	scene.setOnKeyPressed(null);
     }

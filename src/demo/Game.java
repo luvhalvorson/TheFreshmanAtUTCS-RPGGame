@@ -15,7 +15,8 @@ import state.*;
 
 
 public class Game extends Application {
-	Group root;
+	//set public static for test convenience 之後用到的話請傳到constructor
+	public static Group root;
 	Scene scene;
 	public static Canvas canvas;
 	GraphicsContext gc;
@@ -26,17 +27,17 @@ public class Game extends Application {
         // initialize JavaFX nodes
         root = new Group();
         scene = new Scene(root);
-        canvas = new Canvas(700, 500);
+        canvas = new Canvas(700, 512);
         root.getChildren().add(canvas);
         gc = canvas.getGraphicsContext2D();
         
-        // load css file
+        // load CSS file
         scene.getStylesheets().add(Game.class.getResource("StartMenu.css").toExternalForm());
         scene.setFill(Color.BLACK);
         
         // add initial states
         StateStack.add("startmenu", new StartMenuState(root, scene));
-		StateStack.add("map", new MapState(scene, gc));
+        StateStack.add("map", new MapState(scene, gc));
 		//StateStack.add("battle", new BattleState());
 
         // push the first state -- start menu
