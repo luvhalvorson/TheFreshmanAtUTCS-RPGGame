@@ -1,5 +1,7 @@
 package template;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.Rectangle;
 
@@ -11,6 +13,17 @@ public class GameObject extends Rectangle{
 	private double width;
 	private double height;
 	private double velocity;
+	
+	private ArrayList<GameObject> collisions = new ArrayList<>();
+	
+	public GameObject(double x, double y, double width, double height) {
+
+		setX(x);
+		setY(y);
+		setWidth(width);
+		setHeight(height);
+		
+	}
 	
 	public GameObject(String name, double x, double y, double width, double height, double velocity) {
 		
@@ -39,6 +52,7 @@ public class GameObject extends Rectangle{
 	}
 	
 	public Rectangle2D getBounds() {
+		
 		return new Rectangle2D(x, y, width, height);
 	}
 	
@@ -46,4 +60,23 @@ public class GameObject extends Rectangle{
 		return  obj.getBounds().intersects(this.getBounds());
 	}
 	
+	public void addCollisions(GameObject obj) {
+		collisions.add(obj);
+	}
+	
+	public void addCollisions(ArrayList<GameObject> obj) {
+		collisions.addAll(obj);
+	}
+	
+	public boolean checkCollide() {
+		System.out.print("che");
+		boolean isCollided = false;
+		for(GameObject obj : collisions) {
+			if (this.intersects(obj)) {
+				isCollided = true;
+				break;
+			}
+		}
+		return isCollided;
+	}
 }

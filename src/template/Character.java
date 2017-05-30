@@ -59,7 +59,7 @@ public class Character extends GameObject{
 	}
 
 	
-	public void addCollisions(GameObject obj) {
+	/*public void addCollisions(GameObject obj) {
 		collisions.add(obj);
 	}
 	
@@ -72,8 +72,8 @@ public class Character extends GameObject{
 			if (this.intersects(obj)) {
 				isCollided = true;
 				break;
-			};
+			}
 		}
 		return isCollided;
-	}
+	}*/
 }

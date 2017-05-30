@@ -1,5 +1,8 @@
 package state;
 
+import java.io.File;
+import java.net.URISyntaxException;
+
 import demo.Game;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -7,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -18,6 +23,10 @@ public class StartMenuState implements IState {
 	private int menuSelector;
 	private Circle selectDot;
 	
+	MediaPlayer mainMusic;
+	MediaPlayer menuSE1;
+	MediaPlayer menuSE2;
+	
 	public StartMenuState(Group root2, Scene scene) {
 		this.root = root2;
 		this.scene = scene;
@@ -26,21 +35,21 @@ public class StartMenuState implements IState {
 	
 	@Override
 	public void update(long currentNanoTime) {
-		scene.setOnMouseClicked(e -> {
-		        String msg =
-		          "\n這個物件: ("       + e.getX()      + ",  "       + e.getY()       + ")\n " +
-		          "scene: ("  + e.getSceneX() + ",  "  + e.getSceneY()  + ")\n " +
-		          "screen: (" + e.getScreenX()+ ",  " + e.getScreenY() + ")";
-		        System.out.println(msg);
-		    });
+		
 		scene.setOnKeyPressed(e ->{
+			
 			if(e.getCode() == KeyCode.UP && menuSelector > 0) {
 				menuSelector--;
+				menuSE1.stop();
+				menuSE1.play();
+				
 			}
-			if(e.getCode() == KeyCode.DOWN && menuSelector < 3) {
+			else if(e.getCode() == KeyCode.DOWN && menuSelector < 3) {
 				menuSelector++;
+				menuSE1.stop();
+				menuSE1.play();
 			}
-			if(e.getCode() == KeyCode.ENTER) {
+			else if(e.getCode() == KeyCode.ENTER) {
 				System.out.println("進來幹嘛還沒想好怎麼搞啦");
 				switch (menuSelector) {
 				case 0:
@@ -58,6 +67,10 @@ public class StartMenuState implements IState {
 				default:
 					break;
 				}
+			}
+			else {
+				menuSE2.stop();
+				menuSE2.play();
 			}
 		});
 		selectDot.setCenterY(241 + menuSelector * 40);
@@ -92,8 +105,19 @@ public class StartMenuState implements IState {
 		
 		selectDot = new Circle((double)menuX - 20, (double)top - 9, 2.5);
 		selectDot.setFill(Color.WHITESMOKE);
-		//selectDot.setOpacity(0.5);
 		
+		// music 
+		// this doesn't work Media media = new Media(getClass().getResource("src/music/Anthem.mp3").toURI().toString());       
+		mainMusic = new MediaPlayer(new Media(new File("src/resources/music/Anthem.mp3").toURI().toString()));
+		mainMusic.setVolume(0.5);
+		mainMusic.play();
+		
+        menuSE1 = new MediaPlayer(new Media(new File("src/resources/soundEffects/menuP.wav").toURI().toString()));
+        menuSE1.setVolume(0.35);
+        
+        menuSE2 = new MediaPlayer(new Media(new File("src/resources/soundEffects/menuN.wav").toURI().toString()));
+        menuSE2.setVolume(0.9);
+        
 		root.getChildren().addAll(selectDot, gameTitle, second);
 		root.getChildren().addAll(menuText);
     }
@@ -105,6 +129,7 @@ public class StartMenuState implements IState {
 	    	// Add Canvas back
 	    	root.getChildren().add(Game.canvas);
 	    	scene.setOnKeyPressed(null);
+	    	mainMusic.stop();
     }
 
 }

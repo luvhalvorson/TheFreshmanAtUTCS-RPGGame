@@ -39,7 +39,18 @@
   //-fx-opacity: 1.0;
   -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );  
 }
+/* 
+.text-area {
+    -fx-font-family: Consolas;
+    -fx-font-size: 10;
+    -fx-text-fill: #ffffff;
+    -fx-display-caret:true;
+}
 
+.text-area .content {
+    -fx-background-color: #000000;
+    
+}*/
 
 .button {
     -fx-text-fill: white;
